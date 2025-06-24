@@ -1,4 +1,5 @@
 # Create a basic calculator
+
 def add(x, y):
     return x + y
 
@@ -9,12 +10,11 @@ def multiply(x, y):
     return x * y
 
 def divide(x, y):
-    if y != 0:
+    try:
         return x / y
-    else:
-        return "Division by zero error"
+    except ZeroDivisionError:
+        return "Error: Division by zero."
 
-# Calculator operations
 def calculate(operation, x, y):
     if operation == "add":
         return add(x, y)
@@ -25,19 +25,30 @@ def calculate(operation, x, y):
     elif operation == "divide":
         return divide(x, y)
     else:
-        return "Invalid operation"
+        return "Error: Invalid operation."
 
 
+def get_number(prompt):
+    while True:
+        value = input(prompt)
+        try:
+            return float(value)
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
 
 if __name__ == "__main__":
-    # Run the calculator
     print("Welcome to the Calculator!")
+    print("Available operations: add, subtract, multiply, divide")
     while True:
-        operation = input("Enter operation (add, subtract, multiply, divide) or 'quit' to exit: ")
+        operation = input("Enter operation (add, subtract, multiply, divide) or 'quit' to exit: ").strip().lower()
         if operation == "quit":
+            print("Thank you for using the calculator. Goodbye!")
             break
-        x = float(input("Enter first number: "))
-        y = float(input("Enter second number: "))
+        if operation not in ("add", "subtract", "multiply", "divide"):
+            print("Invalid operation. Please try again.")
+            continue
+        x = get_number("Enter first number: ")
+        y = get_number("Enter second number: ")
         result = calculate(operation, x, y)
         print("Result:", result)
 
