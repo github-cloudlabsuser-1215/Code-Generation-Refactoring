@@ -6,7 +6,7 @@ def get_weather(api_key, city):
     try:
         response = requests.get(url)
         response.raise_for_status()
-        data = response.json()
+        data = response.json()&units=metric
         if data.get("cod") != 200:
             return f"Error: {data.get('message', 'Unknown error')}"
         weather = data["weather"][0]["description"].capitalize()
